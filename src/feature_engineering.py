@@ -1,0 +1,31 @@
+import pandas as pd
+
+def load_data():
+    matches = pd.read_csv('data/matches.csv')
+    return matches
+
+def add_batting_first(matches):
+    batting_first = []
+
+    for index, row in matches.iterrows():
+        if row['toss_decision'] == 'bat':
+            batting_first.append(row['toss_winner'])
+        else:
+            batting_first.append(row['team2'] if row['toss_winner'] == row['team1'] else row['team1'])
+
+    matches['batting_first'] = batting_first
+    return matches
+
+def encode_venue(matches):
+    matches['venue_encoded'] = matches['venue'].astype('category').cat.codes
+    return matches
+
+def save_processed_data(matches):
+    matches.to_csv('data/matches_processed.csv', index=False)
+
+if __name__ == "__main__":
+    matches = load_data()
+    matches = add_batting_first(matches)
+    matches = encode_venue(matches)
+    save_processed_data(matches)
+    print("✅ Feature engineering complete. File saved as matches_processed.csv.")
