@@ -69,10 +69,10 @@ def preprocess_input(user_input, feature_columns):
     df_encoded = df_encoded.reindex(columns=feature_columns, fill_value=0)
     return df_encoded
 
-#
+#Error checker for directory Should use only when an error occurs
 
-st.write("Current working directory:", os.getcwd())
-st.write("Model file exists at '../models/match_winner_model.pkl':", os.path.exists('../models/match_winner_model.pkl'))
+#st.write("Current working directory:", os.getcwd())
+#st.write("Model file exists at '../models/match_winner_model.pkl':", os.path.exists('../models/match_winner_model.pkl'))
 
 model = joblib.load('models/match_winner_model.pkl')
 with open('models/feature_columns.json') as f:
