@@ -87,7 +87,7 @@ with open('models/feature_columns.json') as f:
     feature_columns = json.load(f)
 
 st.markdown(
-    "<h1 style='color: white;'>Vamsi's IPL Match Winner Predictor</h1>",
+    "<h1 style='color: white;'>Vamsi's IPL Match Winning Team Prediction System</h1>",
     unsafe_allow_html=True
 )
 
