@@ -74,8 +74,8 @@ def preprocess_input(user_input, feature_columns):
 st.write("Current working directory:", os.getcwd())
 st.write("Model file exists at '../models/match_winner_model.pkl':", os.path.exists('../models/match_winner_model.pkl'))
 
-model = joblib.load('../models/match_winner_model.pkl')
-with open('../models/feature_columns.json') as f:
+model = joblib.load('models/match_winner_model.pkl')
+with open('models/feature_columns.json') as f:
     feature_columns = json.load(f)
 
 st.markdown(
