@@ -17,3 +17,6 @@ The model is trained on historical IPL data and takes the following inputs:
 5. Venue
 
 After input, the app processes the features and displays the predicted winner.
+
+Deployed App
+Visit the live app here: Streamlit Deployment Link <--https://ipl-match-predictor-by-vamsi.streamlit.app/-->
