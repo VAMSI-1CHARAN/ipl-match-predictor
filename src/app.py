@@ -3,6 +3,7 @@ import pandas as pd
 import joblib
 import json
 import base64
+import os
 
 def set_bg_image(image_file):
     with open(image_file, "rb") as file:
@@ -67,6 +68,11 @@ def preprocess_input(user_input, feature_columns):
     df_encoded = pd.get_dummies(df)
     df_encoded = df_encoded.reindex(columns=feature_columns, fill_value=0)
     return df_encoded
+
+#
+
+st.write("Current working directory:", os.getcwd())
+st.write("Model file exists at '../models/match_winner_model.pkl':", os.path.exists('../models/match_winner_model.pkl'))
 
 model = joblib.load('../models/match_winner_model.pkl')
 with open('../models/feature_columns.json') as f:
