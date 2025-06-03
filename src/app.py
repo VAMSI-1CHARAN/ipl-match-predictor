@@ -1,7 +1,27 @@
+#from src.feature_engineering import preprocess_input
 import streamlit as st
 import pandas as pd
 import joblib
 import json
+import streamlit as st
+import base64
+
+def set_bg_image(image_file):
+    with open(image_file, "rb") as file:
+        encoded_string = base64.b64encode(file.read()).decode()
+
+    css = f"""
+    <style>
+    .stApp {{
+        background-image: url("data:image/jpg;base64,{encoded_string}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }}
+    </style>
+    """
+    st.markdown(css, unsafe_allow_html=True)
+set_bg_image("src/ipl_bg.jpeg")
 
 # Mapping for user input teams and venues (new names)
 team_name_map = {
@@ -57,7 +77,11 @@ model = joblib.load('../models/match_winner_model.pkl')
 with open('../models/feature_columns.json', 'r') as f:
     feature_columns = json.load(f)
 
-st.title("🏏 Vamsi's IPL Match Outcome Predictor")
+#st.title("🏏 Vamsi's IPL Match Outcome Predictor")
+st.markdown(
+    "<h1 style='color: white;'>🏏 Vamsi's IPL Match Winner Predictor</h1>",
+    unsafe_allow_html=True
+)
 
 teams = list(team_name_map.keys())
 venues = list(venue_map.keys())
@@ -83,4 +107,20 @@ if st.button("Predict Winner"):
     # Quick fix: map old model output to your new team names
     prediction = model_output_to_new_team.get(raw_prediction, raw_prediction)
 
-    st.success(f"🎯 Predicted Match Winner: **{prediction}**")
+    #st.success(f"🎯 Predicted Match Winner: **{prediction}**")
+    st.markdown(
+    f"""
+    <div style="
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 15px;
+        border-radius: 10px;
+        font-size: 20px;
+        text-align: center;
+        font-weight: bold;
+    ">
+        🎯 Predicted Match Winner: <strong>{prediction}</strong>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
