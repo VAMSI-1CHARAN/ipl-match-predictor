@@ -17,4 +17,3 @@ The model is trained on historical IPL data and takes the following inputs:
 5. Venue
 
 After input, the app processes the features and displays the predicted winner.
-
