@@ -23,6 +23,14 @@ def set_bg_image(image_file):
 
 set_bg_image("src/ipl_bg.jpeg")
 
+st.markdown("""
+    <style>
+    label {
+        color: white !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 team_name_map = {
     'Chennai Super Kings': 'Chennai Super Kings',
     'Mumbai Indians': 'Mumbai Indians',
