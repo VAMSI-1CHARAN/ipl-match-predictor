@@ -1,9 +1,7 @@
-#from src.feature_engineering import preprocess_input
 import streamlit as st
 import pandas as pd
 import joblib
 import json
-import streamlit as st
 import base64
 
 def set_bg_image(image_file):
@@ -21,9 +19,10 @@ def set_bg_image(image_file):
     </style>
     """
     st.markdown(css, unsafe_allow_html=True)
+
+# Use relative path from current working directory (root of repo)
 set_bg_image("src/ipl_bg.jpeg")
 
-# Mapping for user input teams and venues (new names)
 team_name_map = {
     'Chennai Super Kings': 'Chennai Super Kings',
     'Mumbai Indians': 'Mumbai Indians',
@@ -51,7 +50,6 @@ venue_map = {
     'Gujarat': 'Sardar Patel Stadium'
 }
 
-# Map old model output team names (including toss prefix) to new names (quick fix)
 model_output_to_new_team = {
     'toss_Deccan Chargers': 'Sunrisers Hyderabad',
     'toss_Delhi Daredevils': 'Delhi Capitals',
@@ -63,7 +61,6 @@ model_output_to_new_team = {
     'toss_Kolkata Knight Riders': 'Kolkata Knight Riders',
     'toss_Rajasthan Royals': 'Rajasthan Royals',
     'toss_Lucknow Super Giants': 'Lucknow Super Giants',
-    # Add more if needed
 }
 
 def preprocess_input(user_input, feature_columns):
@@ -72,12 +69,11 @@ def preprocess_input(user_input, feature_columns):
     df_encoded = df_encoded.reindex(columns=feature_columns, fill_value=0)
     return df_encoded
 
-# Load model and feature columns
-model = joblib.load('../models/match_winner_model.pkl')
-with open('../models/feature_columns.json', 'r') as f:
+# Fix: paths relative to repo root, where Streamlit runs from
+model = joblib.load('models/match_winner_model.pkl')
+with open('models/feature_columns.json', 'r') as f:
     feature_columns = json.load(f)
 
-#st.title("🏏 Vamsi's IPL Match Outcome Predictor")
 st.markdown(
     "<h1 style='color: white;'>🏏 Vamsi's IPL Match Winner Predictor</h1>",
     unsafe_allow_html=True
@@ -104,23 +100,21 @@ if st.button("Predict Winner"):
     input_df = preprocess_input(user_input, feature_columns)
     raw_prediction = model.predict(input_df)[0]
 
-    # Quick fix: map old model output to your new team names
     prediction = model_output_to_new_team.get(raw_prediction, raw_prediction)
 
-    #st.success(f"🎯 Predicted Match Winner: **{prediction}**")
     st.markdown(
-    f"""
-    <div style="
-        background-color: rgba(0, 0, 0, 0.7);
-        color: white;
-        padding: 15px;
-        border-radius: 10px;
-        font-size: 20px;
-        text-align: center;
-        font-weight: bold;
-    ">
-        🎯 Predicted Match Winner: <strong>{prediction}</strong>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+        f"""
+        <div style="
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 20px;
+            text-align: center;
+            font-weight: bold;
+        ">
+            🎯 Predicted Match Winner: <strong>{prediction}</strong>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
