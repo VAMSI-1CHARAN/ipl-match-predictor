@@ -18,18 +18,3 @@ The model is trained on historical IPL data and takes the following inputs:
 
 After input, the app processes the features and displays the predicted winner.
 
-For Developers:
-Project Structure:
-
-ipl-match-predictor/
-├── data/                       
-│   ├── matches_processed.csv
-│   └── deliveries.csv
-├── models/                     
-│   ├── match_winner_model.pkl
-│   └── feature_columns.json
-├── src/                        
-│   ├── app.py                  
-│   └── feature_engineering.py 
-├── requirements.txt
-└── README.md
